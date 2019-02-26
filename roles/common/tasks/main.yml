@@ -1,0 +1,9 @@
+---
+
+- name: Check if the CPU supports virtual machine extensions
+  shell: egrep -c '(vmx|svm)' /proc/cpuinfo
+  register: cpu_support
+
+- fail:
+    msg: CPU does not support virtual machine extensions
+  when: cpu_support.stdout == "0"

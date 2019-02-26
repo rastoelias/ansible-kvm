@@ -1,0 +1,18 @@
+# This file is generated from information provided by
+# the datasource.  Changes to it will not persist across an instance.
+# To disable cloud-init's network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+  ethernets:
+    {{ ansible_default_ipv4.interface }}:
+      dhcp4: false
+  version: 2
+  bridges:
+    br0:
+      interfaces: [{{ ansible_default_ipv4.interface }}]
+      dhcp4: false
+      addresses: [{{ ansible_default_ipv4.address }}/24]
+      gateway4: {{ NETWORK_GATEWAY }}
+      nameservers:
+        addresses: [{{ NETWORK_NAMESERVERS }}]

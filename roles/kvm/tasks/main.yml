@@ -1,0 +1,67 @@
+---
+
+- name: Create a group named `{{ KVM_GROUP_NAME }}`
+  group:
+    name: '{{ KVM_GROUP_NAME }}'
+    state: present
+
+- name: Install required packages
+  apt:
+    name:
+      - bridge-utils
+      - libvirt-bin
+      - qemu-kvm
+      - qemu-system
+
+- name: Make the `root` user and the `'{{ KVM_GROUP_NAME }}'` group the owner of the `/var/lib/libvirt/images` directory, and set the permisions
+  file:
+    path: /var/lib/libvirt/images
+    owner: root
+    group: '{{ KVM_GROUP_NAME }}'
+    mode: "g+rw"
+
+- name: Add the primary user `{{ NON_ROOT_SUDO_USER }}` to the `{{ KVM_GROUP_NAME }}` group
+  user:
+    name: '{{ NON_ROOT_SUDO_USER }}'
+    groups: '{{ KVM_GROUP_NAME }}'
+    append: yes
+
+- name: Set the UNIX domain socket group ownership
+  lineinfile:
+    dest: /etc/libvirt/libvirtd.conf
+    regexp: '^unix_sock_group'
+    line: 'unix_sock_group = "{{ KVM_GROUP_NAME }}"'
+    state: present
+  notify: Restart libvirt
+
+- name: Set the UNIX socket permissions
+  lineinfile:
+    dest: /etc/libvirt/libvirtd.conf
+    regexp: '^unix_sock_ro_perms'
+    line: 'unix_sock_ro_perms = "0770"'
+    state: present
+  notify: Restart libvirt
+
+- name: Create a directory for ISO images
+  file:
+    path: '{{ ISO_STORAGE_DIRECTORY }}'
+    state: directory
+
+- name: Make the `root` user and the `'{{ KVM_GROUP_NAME }}'` group the owner of the ISO directory, and set the permisions
+  file:
+    path: '{{ ISO_STORAGE_DIRECTORY }}'
+    owner: root
+    group: '{{ KVM_GROUP_NAME }}'
+    mode: "g+rw"
+
+- name: Find the netplan configuration file for the network interface
+  find:
+    paths: /etc/netplan
+    patterns: "01-netcfg.yaml,50-cloud-init.yaml"
+  register: netplan_file
+
+- name: Replace the netplan configuration file
+  template:
+    src: "{{ netplan_file.files[0].path | regex_replace('/etc/netplan/','') }}.j2"
+    dest: '{{ netplan_file.files[0].path }}'
+  notify: Apply netplan configuration

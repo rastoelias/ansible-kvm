@@ -1,0 +1,16 @@
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    {{ ansible_default_ipv4.interface }}:
+      dhcp4: no
+  bridges:
+    br0:
+      interfaces: [{{ ansible_default_ipv4.interface }}]
+      dhcp4: no
+      addresses: [{{ ansible_default_ipv4.address }}/24]
+      gateway4: {{ NETWORK_GATEWAY }}
+      nameservers:
+        addresses: [{{ NETWORK_NAMESERVERS }}]

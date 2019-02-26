@@ -1,0 +1,10 @@
+---
+
+- name: Restart libvirt
+  service:
+    name: libvirtd
+    state: restarted
+
+- name: Apply netplan configuration
+  command: netplan apply
+    
