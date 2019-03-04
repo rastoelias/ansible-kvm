@@ -5,6 +5,10 @@ KVM_GROUP_NAME: kvm
 # Primary user account you use on the server
 NON_ROOT_SUDO_USER: USERNAME
 
+# To generate a random strong password you can use https://www.lastpass.com/password-generator
+# Then use Mkpassword for generate password hash `mkpasswd -m sha-512`
+ROOT_USER_PASSWORD_HASH: PASSWORD-HASH
+
 # Directory where ISO images will be stored.
 ISO_STORAGE_DIRECTORY: /var/lib/libvirt/images/ISO
 

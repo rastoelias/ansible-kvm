@@ -1,0 +1,6 @@
+---
+
+- name: Change `root` password
+  user:
+    name: root
+    password: '{{ ROOT_USER_PASSWORD_HASH }}'

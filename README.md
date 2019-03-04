@@ -4,6 +4,7 @@ An Ansible playbook to setting up a KVM on Ubuntu (tested on 18.04).
 ## Requirements
 * SSH Keys on the local machine.
 * Ansible 2.7+ on your local machine.
+* Mkpassword on your local machine.
 * Remote machine with the [Ubuntu server 18.04](http://cdimage.ubuntu.com/releases/18.04.2/release/) installed.
 * Non-root sudo user with SSH Key-Based Authentication your remote machine.
 
