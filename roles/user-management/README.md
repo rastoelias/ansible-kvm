@@ -3,3 +3,4 @@
 ## Tasks
 * Change `root` password.
 * Lock `root` account.
+* Disallow password authentication.
