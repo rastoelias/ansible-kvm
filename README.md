@@ -1,11 +1,11 @@
-# Ubuntu KVM
-An Ansible playbook to Setting up a virtual machine server (KVM) on Ubuntu 18.04.
+# Ansible playbook: KVM
+An Ansible playbook to setting up a KVM on Ubuntu (tested on 18.04).
 
 ## Requirements
-* SSH Keys on the client machine.
-* A machine with the [Ubuntu server](http://cdimage.ubuntu.com/releases/18.04.2/release/) installed.
-* SSH Key-Based Authentication your server.
-* Ansible 2.7+
+* SSH Keys on the local machine.
+* Ansible 2.7+ on your local machine.
+* Remote machine with the [Ubuntu server 18.04](http://cdimage.ubuntu.com/releases/18.04.2/release/) installed.
+* SSH Key-Based Authentication your remote machine.
 
 
 > Note: For managing KVM virtual machines using `virt-manager` (a graphical utility for managing KVM virtual machines), you will need a linux desktop workstation, or linux desktop VM running on your Windows or MacOS workstation. Or, you can manage VMs via the command line which is not recommended.
