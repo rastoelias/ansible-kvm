@@ -4,3 +4,6 @@
   user:
     name: root
     password: '{{ ROOT_USER_PASSWORD_HASH }}'
+
+- name: Lock `root` account
+  command: passwd -l root

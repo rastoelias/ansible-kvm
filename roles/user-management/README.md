@@ -2,3 +2,4 @@
 
 ## Tasks
 * Change `root` password.
+* Lock `root` account.
