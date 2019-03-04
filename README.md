@@ -16,7 +16,7 @@ To use `virt-manager`, install the following packages on your Linux desktop wokr
 ## Usage
 1. Clone this repository.
     ```
-    git clone https://github.com/rastoelias/ubuntu-server-kvm.git ubuntu-server-kvm
+    git clone https://github.com/rastoelias/ansible-playbook-kvm.git kvm
     ```
 2. Copy the `hosts.example` file to the `hosts` file.
     ```
