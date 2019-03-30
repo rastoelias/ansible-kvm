@@ -55,6 +55,29 @@
     group: '{{ KVM_GROUP_NAME }}'
     mode: "g+rw"
 
+- name: Find physical network interface name
+  shell: "lshw -class network | grep -A 1 'bus info' | grep name | awk -F': ' '{print $2}'"
+  register: network_interface_name
+  become: true
+- debug:
+    msg: '{{ network_interface_name.stdout_lines|length }}'
+
+- name: Set the PHYSICAL_NETWORK_INTERFACE_NAME variable
+  set_fact:
+    PHYSICAL_NETWORK_INTERFACE_NAME: '{{ network_interface_name.stdout }}'
+  when: network_interface_name.stdout_lines|length == 1
+
+- name: Check `PHYSICAL_NETWORK_INTERFACE_NAME` variable
+  fail:
+    msg: >
+      Getting the physical network interface name failed.
+      You may have more than one physical network interfaces installed. 
+      Run `ansible all -m shell -a 'ip a'` for details
+      and set the PHYSICAL_NETWORK_INTERFACE_NAME variable manualy in `config.yml`
+  when:
+    - network_interface_name.stdout_lines|length != 1
+    - PHYSICAL_NETWORK_INTERFACE_NAME == 'auto'
+
 - name: Find the netplan configuration file for the network interface
   find:
     paths: /etc/netplan

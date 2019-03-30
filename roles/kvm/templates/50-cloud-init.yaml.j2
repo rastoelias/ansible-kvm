@@ -5,12 +5,12 @@
 # network: {config: disabled}
 network:
   ethernets:
-    {{ ansible_default_ipv4.interface }}:
+    {{ PHYSICAL_NETWORK_INTERFACE_NAME }}:
       dhcp4: false
   version: 2
   bridges:
     br0:
-      interfaces: [{{ ansible_default_ipv4.interface }}]
+      interfaces: [{{ PHYSICAL_NETWORK_INTERFACE_NAME }}]
       dhcp4: false
       addresses: [{{ ansible_default_ipv4.address }}/24]
       gateway4: {{ NETWORK_GATEWAY }}
