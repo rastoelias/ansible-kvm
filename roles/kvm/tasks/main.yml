@@ -59,8 +59,6 @@
   shell: "lshw -class network | grep -A 1 'bus info' | grep name | awk -F': ' '{print $2}'"
   register: network_interface_name
   become: true
-- debug:
-    msg: '{{ network_interface_name.stdout_lines|length }}'
 
 - name: Set the PHYSICAL_NETWORK_INTERFACE_NAME variable
   set_fact:
